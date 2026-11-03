@@ -314,27 +314,71 @@ function exportPDF(){
 /* =========================
    MATIERES
 ========================= */
-
 const colors = {
+"maths":
+  "linear-gradient(135deg,#2563eb,#60a5fa)",
 
-    "maths":"#3b82f6",
-    "français":"#ef4444",
-    "anglais":"#22c55e",
-    "arabe":"#ffa200",
-    "histoire":"#8b5cf6",
-    "géographie":"#8b5cf6",
-    "éducation Civique":"#8b5cf6",
-    "physique":"#bbac0b",
-    "chimie":"#14b8a6",
-    "svt":"#22c548",
-    "informatique":"#6366f1",
-    "technologie":"#c34c16",
-    "sport":"#dc2626",
-    "islamique":"#00ff66",
-    "philosophie":"#f97316"
-     
+  "français":
+  "linear-gradient(135deg,#dc2626,#f87171)",
+
+  "anglais":
+  "linear-gradient(135deg,#16a34a,#4ade80)",
+
+  "arabe":
+  "linear-gradient(135deg,#ea580c,#fb923c)",
+
+  "histoire":
+  "linear-gradient(135deg,#7c3aed,#a78bfa)",
+
+  "géographie":
+  "linear-gradient(135deg,#9333ea,#c084fc)",
+
+  "physique":
+  "linear-gradient(135deg,#0891b2,#67e8f9)",
+
+  "chimie":
+  "linear-gradient(135deg,#0f766e,#5eead4)",
+
+  "svt":
+  "linear-gradient(135deg,#15803d,#86efac)",
+
+  "informatique":
+  "linear-gradient(135deg,#4338ca,#818cf8)",
+
+  "technologie":
+  "linear-gradient(135deg,#db2777,#f9a8d4)",
+
+  "sport":
+  "linear-gradient(135deg,#b91c1c,#f87171)",
+
+  "islamique":
+  "linear-gradient(135deg,#65a30d,#bef264)",
+
+  "philosophie":
+  "linear-gradient(135deg,#d97706,#fdba74)",
+
+  "espagnol":
+  "linear-gradient(135deg,#e11d48,#fda4af)",
+
+  "allemand":
+  "linear-gradient(135deg,#475569,#94a3b8)",
+
+  "musique":
+  "linear-gradient(135deg,#be185d,#f472b6)",
+
+  "arts":
+  "linear-gradient(135deg,#7e22ce,#e879f9)",
+
+  "dessin":
+  "linear-gradient(135deg,#c026d3,#f0abfc)",
+
+  "économie":
+  "linear-gradient(135deg,#0284c7,#7dd3fc)",
+
+  "gestion":
+  "linear-gradient(135deg,#0369a1,#38bdf8)"
 };
-
+    
 function getSubjectColor(subject){
 
     subject =
