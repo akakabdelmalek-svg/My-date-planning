@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mes Emplois du Temps</title>
+<link rel="icon" type="image/png" href="logo.png">
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    padding:20px;
+    background:linear-gradient(
+        135deg,
+        #0f172a,
+        #1e293b,
+        #334155
+    );
+    color:white;
+}
+
+body.light{
+    background:#f4f6f9;
+    color:#111;
+}
+
+h1{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.topbar{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:20px;
+}
+
+.topbar input{
+    flex:1;
+    min-width:200px;
+}
+
+input,
+button{
+    padding:12px;
+    border:none;
+    border-radius:12px;
+}
+
+button{
+    cursor:pointer;
+    background:#6366f1;
+    color:white;
+    transition:.2s;
+}
+
+button:hover{
+    transform:translateY(-2px);
+}
+
+.card{
+    background:rgba(255,255,255,.08);
+    backdrop-filter:blur(10px);
+    padding:18px;
+    border-radius:18px;
+    margin-bottom:12px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    transition:.25s;
+    cursor:pointer;
+}
+
+.card:hover{
+    transform:translateY(-4px);
+}
+
+body.light .card{
+    background:white;
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+}
+
+.actions{
+    display:flex;
+    gap:5px;
+}
+
+.actions button{
+    padding:8px 12px;
+}
+
+#planner{
+    display:none;
+}
+
+.planner-top{
+    display:flex;
+    gap:10px;
+    margin-bottom:20px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    background:white;
+    color:black;
+    border-radius:15px;
+    overflow:hidden;
+}
+
+th{
+    background:#4f46e5;
+    color:white;
+    padding:12px;
+}
+
+td{
+    border:1px solid #ddd;
+    text-align:center;
+}
+
+.hour{
+    font-weight:bold;
+    background:#eef2ff;
+    width:120px;
+}
+
+.course{
+    cursor:pointer;
+    height:60px;
+    transition:.2s;
+}
+
+.course:hover{
+    filter:brightness(.95);
+}
+
+small{
+    opacity:.85;
+}
+
+@media(max-width:900px){
+
+    body{
+        padding:10px;
+    }
+
+    .topbar{
+        flex-direction:column;
+    }
+
+    table{
+        display:block;
+        overflow-x:auto;
+        white-space:nowrap;
+    }
+
+    .course{
+        min-width:90px;
+    }
+
+}
+
+@media print{
+
+    .topbar,
+    .planner-top{
+        display:none;
+    }
+
+    body{
+        background:white;
+    }
+
+}
+
+</style>
+</head>
+<body>
+
+<!-- ACCUEIL -->
+
+<div id="home">
+
+    <h1>📅 Mes Emplois du Temps</h1>
+
+    <div class="topbar">
+
+        <input
+        type="text"
+        id="search"
+        placeholder="🔍 Rechercher un planning..."
+        oninput="searchPlannings()">
+
+        <button onclick="addPlanning()">
+            ➕ Ajouter
+        </button>
+
+        <button onclick="toggleTheme()">
+            🌙 Mode
+        </button>
+
+    </div>
+
+    <div id="planningList"></div>
+
+</div>
+
+<!-- PAGE PLANNING -->
+
+<div id="planner">
+
+    <div class="planner-top">
+
+        <button onclick="goHome()">
+            ⬅ Retour
+        </button>
+
+        <button onclick="exportPDF()">
+            📤 PDF
+        </button>
+
+    </div>
+
+    <h1 id="planningTitle">
+        Mon planning
+    </h1>
+
+    <table>
+
+        <thead>
+
+        <tr>
+
+            <th>Heure</th>
+
+            <th>
+                Lundi
+                <br>
+                <small id="date0"></small>
+            </th>
+
+            <th>
+                Mardi
+                <br>
+                <small id="date1"></small>
+            </th>
+
+            <th>
+                Mercredi
+                <br>
+                <small id="date2"></small>
+            </th>
+
+            <th>
+                Jeudi
+                <br>
+                <small id="date3"></small>
+            </th>
+
+            <th>
+                Vendredi
+                <br>
+                <small id="date4"></small>
+            </th>
+
+            <th>
+                Samedi
+                <br>
+                <small id="date5"></small>
+            </th>
+
+            <th>
+                Dimanche
+                <br>
+                <small id="date6"></small>
+            </th>
+
+        </tr>
+
+        </thead>
+
+        <tbody id="planningBody">
+
+        </tbody>
+
+    </table>
+
+</div>
+
+<script src="script.js"></script>
+
+
+
+<script>
+
+let currentPlanning = null;
+
+let plannings =
+JSON.parse(
+localStorage.getItem("plannings")
+|| "[]"
+);
+
+const planningList =
+document.getElementById("planningList");
+
+const planningBody =
+document.getElementById("planningBody");
+
+const planningTitle =
+document.getElementById("planningTitle");
+
+/* =========================
+   SAUVEGARDE
+========================= */
+
+function savePlannings(){
+
+    localStorage.setItem(
+        "plannings",
+        JSON.stringify(plannings)
+    );
+}
+
+/* =========================
+   RECHERCHE
+========================= */
+
+function searchPlannings(){
+
+    const query =
+    document.getElementById("search")
+    .value
+    .toLowerCase();
+
+    loadPlannings(query);
+}
+
+/* =========================
+   CHARGER LISTE
+========================= */
+
+function loadPlannings(search = ""){
+
+    planningList.innerHTML = "";
+
+    const sorted =
+    [...plannings].sort(
+        (a,b) =>
+        b.favorite - a.favorite
+    );
+
+    sorted.forEach(planning => {
+
+        if(
+            !planning.name
+            .toLowerCase()
+            .includes(search)
+        ){
+            return;
+        }
+
+        const card =
+        document.createElement("div");
+
+        card.className = "card";
+
+        card.style.borderLeft =
+        `8px solid ${planning.color}`;
+
+        card.innerHTML = `
+            <div>
+                ${
+                  planning.favorite
+                  ? "⭐"
+                  : ""
+                }
+                ${planning.name}
+            </div>
+
+            <div class="actions">
+
+                <button
+                onclick="toggleFavorite(event,'${planning.id}')">
+                ⭐
+                </button>
+
+                <button
+                onclick="renamePlanning(event,'${planning.id}')">
+                ✏️
+                </button>
+
+                <button
+                onclick="deletePlanning(event,'${planning.id}')">
+                🗑️
+                </button>
+
+            </div>
+        `;
+
+        card.onclick = () => {
+            openPlanning(planning.id);
+        };
+
+        planningList.appendChild(card);
+    });
+}
+
+/* =========================
+   AJOUT
+========================= */
+
+function addPlanning(){
+
+    const name =
+    prompt(
+        "Nom du planning :"
+    );
+
+    if(!name) return;
+
+    if(
+        plannings.some(
+            p =>
+            p.name.toLowerCase() ===
+            name.toLowerCase()
+        )
+    ){
+        alert("Ce nom existe déjà.");
+        return;
+    }
+
+    const color =
+    prompt(
+        "Couleur CSS (#3b82f6 par exemple)",
+        "#3b82f6"
+    );
+
+    const planning = {
+        id: Date.now(),
+        name,
+        color,
+        favorite:false
+    };
+
+    plannings.push(planning);
+
+    savePlannings();
+
+    loadPlannings();
+}
+
+/* =========================
+   FAVORI
+========================= */
+
+function toggleFavorite(e,id){
+
+    e.stopPropagation();
+
+    const planning =
+    plannings.find(
+        p => p.id == id
+    );
+
+    planning.favorite =
+    !planning.favorite;
+
+    savePlannings();
+
+    loadPlannings();
+}
+
+/* =========================
+   RENOMMER
+========================= */
+
+function renamePlanning(e,id){
+
+    e.stopPropagation();
+
+    const planning =
+    plannings.find(
+        p => p.id == id
+    );
+
+    const newName =
+    prompt(
+        "Nouveau nom",
+        planning.name
+    );
+
+    if(!newName) return;
+
+    planning.name = newName;
+
+    savePlannings();
+
+    loadPlannings();
+}
+
+/* =========================
+   SUPPRIMER
+========================= */
+
+function deletePlanning(e,id){
+
+    e.stopPropagation();
+
+    if(
+        !confirm(
+            "Supprimer ce planning ?"
+        )
+    ){
+        return;
+    }
+
+    plannings =
+    plannings.filter(
+        p => p.id != id
+    );
+
+    savePlannings();
+
+    loadPlannings();
+}
+
+/* =========================
+   OUVRIR
+========================= */
+
+function openPlanning(id){
+
+    currentPlanning = id;
+
+    const planning =
+    plannings.find(
+        p => p.id == id
+    );
+
+    document.getElementById(
+        "home"
+    ).style.display = "none";
+
+    document.getElementById(
+        "planner"
+    ).style.display = "block";
+
+    planningTitle.textContent =
+    planning.name;
+
+    createSchedule();
+}
+
+/* =========================
+   RETOUR
+========================= */
+
+function goHome(){
+
+    document.getElementById(
+        "planner"
+    ).style.display = "none";
+
+    document.getElementById(
+        "home"
+    ).style.display = "block";
+}
+
+/* =========================
+   MODE SOMBRE
+========================= */
+
+function toggleTheme(){
+
+    document.body.classList
+    .toggle("light");
+
+    const mode =
+    document.body.classList
+    .contains("light")
+    ? "light"
+    : "dark";
+
+    localStorage.setItem(
+        "theme",
+        mode
+    );
+}
+
+if(
+    localStorage.getItem("theme")
+    ===
+    "light"
+){
+    document.body.classList
+    .add("light");
+}
+
+/* =========================
+   EXPORT PDF
+========================= */
+
+function exportPDF(){
+
+    window.print();
+}
+
+/* =========================
+   MATIERES
+========================= */
+
+const colors = {
+
+    "maths":"#3b82f6",
+    "français":"#ef4444",
+    "anglais":"#22c55e",
+    "arabe":"#f59e0b",
+    "histoire":"#8b5cf6",
+    "géographie":"#8b5cf6",
+    "physique":"#06b6d4",
+    "chimie":"#14b8a6",
+    "svt":"#22c55e",
+    "informatique":"#6366f1",
+    "technologie":"#ec4899",
+    "sport":"#dc2626",
+    "islamique":"#84cc16",
+    "philosophie":"#f97316"
+
+};
+
+function getSubjectColor(subject){
+
+    subject =
+    subject.toLowerCase().trim();
+
+    return (
+        colors[subject]
+        ||
+        "#ffffff"
+    );
+}
+
+/* =========================
+   TABLEAU
+========================= */
+
+function createSchedule(){
+
+    planningBody.innerHTML = "";
+
+    for(let h=8; h<20; h++){
+
+        const row =
+        document.createElement("tr");
+
+        const hour =
+        document.createElement("td");
+
+        hour.className = "hour";
+
+        hour.textContent =
+        `${h}:00 - ${h+1}:00`;
+
+        row.appendChild(hour);
+
+        for(let d=0; d<7; d++){
+
+            const cell =
+            document.createElement("td");
+
+            cell.className =
+            "course";
+
+            const key =
+            `${currentPlanning}-${d}-${h}`;
+
+            const saved =
+            localStorage.getItem(key);
+
+            if(saved){
+
+                cell.textContent =
+                saved;
+
+                const color =
+                getSubjectColor(saved);
+
+                cell.style.background =
+                color;
+
+                cell.style.color =
+                color === "#ffffff"
+                ? "#000"
+                : "#fff";
+            }
+
+            cell.onclick = () => {
+
+                const value =
+                prompt(
+                    "Matière :",
+                    cell.textContent
+                );
+
+                if(value === null)
+                return;
+
+                if(
+                    value.trim() === ""
+                ){
+
+                    localStorage.removeItem(
+                        key
+                    );
+
+                    cell.textContent =
+                    "";
+
+                    cell.style.background =
+                    "#fff";
+
+                    return;
+                }
+
+                localStorage.setItem(
+                    key,
+                    value
+                );
+
+                cell.textContent =
+                value;
+
+                const color =
+                getSubjectColor(value);
+
+                cell.style.background =
+                color;
+
+                cell.style.color =
+                color === "#ffffff"
+                ? "#000"
+                : "#fff";
+            };
+
+            row.appendChild(cell);
+        }
+
+        planningBody.appendChild(row);
+    }
+}
+
+/* =========================
+   INITIALISATION
+========================= */
+
+loadPlannings();
+</script>
+
+</body>
+</html>
