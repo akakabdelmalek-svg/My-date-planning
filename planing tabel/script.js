@@ -320,18 +320,19 @@ const colors = {
     "maths":"#3b82f6",
     "français":"#ef4444",
     "anglais":"#22c55e",
-    "arabe":"#f59e0b",
+    "arabe":"#ffa200",
     "histoire":"#8b5cf6",
     "géographie":"#8b5cf6",
-    "physique":"#06b6d4",
+    "éducation Civique":"#8b5cf6",
+    "physique":"#bbac0b",
     "chimie":"#14b8a6",
-    "svt":"#22c55e",
+    "svt":"#22c548",
     "informatique":"#6366f1",
-    "technologie":"#ec4899",
+    "technologie":"#c34c16",
     "sport":"#dc2626",
-    "islamique":"#84cc16",
+    "islamique":"#00ff66",
     "philosophie":"#f97316"
-
+     
 };
 
 function getSubjectColor(subject){
