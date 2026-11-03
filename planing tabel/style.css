@@ -1,0 +1,174 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    padding:20px;
+    background:linear-gradient(
+        135deg,
+        #0f172a,
+        #1e293b,
+        #334155
+    );
+    color:white;
+}
+
+body.light{
+    background:#f4f6f9;
+    color:#111;
+}
+
+h1{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.topbar{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:20px;
+}
+
+.topbar input{
+    flex:1;
+    min-width:200px;
+}
+
+input,
+button{
+    padding:12px;
+    border:none;
+    border-radius:12px;
+}
+
+button{
+    cursor:pointer;
+    background:#6366f1;
+    color:white;
+    transition:.2s;
+}
+
+button:hover{
+    transform:translateY(-2px);
+}
+
+.card{
+    background:rgba(255,255,255,.08);
+    backdrop-filter:blur(10px);
+    padding:18px;
+    border-radius:18px;
+    margin-bottom:12px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    transition:.25s;
+    cursor:pointer;
+}
+
+.card:hover{
+    transform:translateY(-4px);
+}
+
+body.light .card{
+    background:white;
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+}
+
+.actions{
+    display:flex;
+    gap:5px;
+}
+
+.actions button{
+    padding:8px 12px;
+}
+
+#planner{
+    display:none;
+}
+
+.planner-top{
+    display:flex;
+    gap:10px;
+    margin-bottom:20px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    background:white;
+    color:black;
+    border-radius:15px;
+    overflow:hidden;
+}
+
+th{
+    background:#4f46e5;
+    color:white;
+    padding:12px;
+}
+
+td{
+    border:1px solid #ddd;
+    text-align:center;
+}
+
+.hour{
+    font-weight:bold;
+    background:#eef2ff;
+    width:120px;
+}
+
+.course{
+    cursor:pointer;
+    height:60px;
+    transition:.2s;
+}
+
+.course:hover{
+    filter:brightness(.95);
+}
+
+small{
+    opacity:.85;
+}
+
+@media(max-width:900px){
+
+    body{
+        padding:10px;
+    }
+
+    .topbar{
+        flex-direction:column;
+    }
+
+    table{
+        display:block;
+        overflow-x:auto;
+        white-space:nowrap;
+    }
+
+    .course{
+        min-width:90px;
+    }
+
+}
+
+@media print{
+
+    .topbar,
+    .planner-top{
+        display:none;
+    }
+
+    body{
+        background:white;
+    }
+
+}
