@@ -337,8 +337,7 @@ const colors = {
 "allemand":"linear-gradient(135deg,#475569,#cbd5e1)",
 "économie":"linear-gradient(135deg,#0284c7,#93c5fd)",
 "gestion":"linear-gradient(135deg,#0369a1,#7dd3fc)",
-"hyper nova":
-"linear-gradient(135deg,#ff0000,#ff00ff,#00ffff)"
+"hyper nova":"linear-gradient(135deg,#ff0000,#ff7300,#ffd700)"
 };
     
 function getSubjectColor(subject){
