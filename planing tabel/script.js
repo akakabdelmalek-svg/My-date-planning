@@ -318,25 +318,25 @@ const colors = {
 "maths":
   "linear-gradient(135deg,#2563eb,#60a5fa)",
 
-  "francais;,fr":
+  "francais":
   "linear-gradient(135deg,#dc2626,#f87171)",
 
-  "anglais;,eng":
+  "anglais":
   "linear-gradient(135deg,#16a34a,#4ade80)",
 
-  "arabe;,arb":
+  "arabe;,":
   "linear-gradient(135deg,#ea580c,#fb923c)",
 
-  "histoire;,his":
+  "histoire;,":
   "linear-gradient(135deg,#7c3aed,#a78bfa)",
 
-  "géographie;,geo":
+  "géographie":
   "linear-gradient(135deg,#9333ea,#c084fc)",
 
-  "physique;,phy":
+  "physique":
   "linear-gradient(135deg,#0891b2,#67e8f9)",
 
-  "chimie;,ch":
+  "chimie":
   "linear-gradient(135deg,#0f766e,#5eead4)",
 
   "svt":
@@ -345,13 +345,13 @@ const colors = {
   "informatique":
   "linear-gradient(135deg,#4338ca,#818cf8)",
 
-    "technologie;,techno":
+    "technologie":
   "linear-gradient(135deg,#db2777,#f9a8d4)",
 
   "sport":
   "linear-gradient(135deg,#b91c1c,#f87171)",
 
-  "islamique;,isl":
+  "islamique":
   "linear-gradient(135deg,#65a30d,#bef264)",
 
   "philosophie":
@@ -376,7 +376,10 @@ const colors = {
   "linear-gradient(135deg,#0284c7,#7dd3fc)",
 
   "gestion":
-  "linear-gradient(135deg,#0369a1,#38bdf8)"
+  "linear-gradient(135deg,#0369a1,#38bdf8)",
+    
+  "géo":
+  "linear-gradient(135deg,#9333ea,#c084fc)",
 
   
 };
