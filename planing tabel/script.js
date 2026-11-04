@@ -339,7 +339,8 @@ const colors = {
 "gestion":"linear-gradient(135deg,#0369a1,#7dd3fc)",
 "hyper nova":"linear-gradient(135deg,#ff0000,#ff7300,#ffd700)",
  "revision":"linear-gradient(135deg,#1500ff,#1f0045)",
- "aprendre":"linear-gradient(135deg,#ff0000,#00d5ec)"
+ "aprendre":"linear-gradient(135deg,#ff0000,#00d5ec)",
+"devoirs":"linear-gradient(135deg,#f59e0b,#fde68a)"
 };
     
 function getSubjectColor(subject){
