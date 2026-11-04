@@ -315,7 +315,7 @@ function exportPDF(){
    MATIERES
 ========================= */
 const colors = {
-"maths":
+   "maths":
   "linear-gradient(135deg,#2563eb,#60a5fa)",
 
   "francais":
@@ -324,10 +324,10 @@ const colors = {
   "anglais":
   "linear-gradient(135deg,#16a34a,#4ade80)",
 
-  "arabe;,":
+  "arabe":
   "linear-gradient(135deg,#ea580c,#fb923c)",
 
-  "histoire;,":
+  "histoire":
   "linear-gradient(135deg,#7c3aed,#a78bfa)",
 
   "géographie":
@@ -376,10 +376,7 @@ const colors = {
   "linear-gradient(135deg,#0284c7,#7dd3fc)",
 
   "gestion":
-  "linear-gradient(135deg,#0369a1,#38bdf8)",
-    
-  "géo":
-  "linear-gradient(135deg,#9333ea,#c084fc)",
+  "linear-gradient(135deg,#0369a1,#38bdf8)"
 
   
 };
