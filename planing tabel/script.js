@@ -385,18 +385,6 @@ function getSubjectColor(subject){
 
     return stringToColor(subject);
 }
-function getSubjectColor(subject){
-
-    subject =
-    subject.toLowerCase().trim();
-
-    return (
-        colors[subject]
-        ||
-        "#ffffff"
-    );
-}
-
 /* =========================
    TABLEAU
 ========================= */
